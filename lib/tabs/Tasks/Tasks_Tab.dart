@@ -1,34 +1,34 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/Task_Model.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/tabs/Tasks/Task_Item.dart';
+import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
 class TasksTab extends StatelessWidget {
   TasksTab({super.key});
-  List<TaskModel> tasks = List.generate(
-    15,
-    (index) => TaskModel(
-      title: 'Task Title ${index + 1}',
-      description: 'Task description ${index + 1}',
-      date: DateTime.now(),
-    ),
-  );
+
   @override
   Widget build(BuildContext context) {
+    TasksProvider tasksProvider = Provider.of<TasksProvider>(context);
     return SafeArea(
       child: Column(
         children: [
           EasyInfiniteDateTimeLine(
             firstDate: DateTime.now().subtract(Duration(days: 30)),
             lastDate: DateTime.now().add(Duration(days: 30)),
-            focusDate: DateTime.now(),
+            focusDate: tasksProvider.selectedDate,
             showTimelineHeader: false,
+            onDateChange: (focusDate) {
+              tasksProvider.changedate(focusDate);
+              tasksProvider.getalltasks();
+            },
           ),
           Expanded(
               child: ListView.builder(
             padding: EdgeInsets.only(top: 20),
-            itemBuilder: (context, index) => Task_Item(tasks[index]),
-            itemCount: tasks.length,
+            itemBuilder: (context, index) =>
+                Task_Item(tasksProvider.tasks[index]),
+            itemCount: tasksProvider.tasks.length,
           )),
         ],
       ),

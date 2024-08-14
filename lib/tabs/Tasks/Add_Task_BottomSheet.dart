@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
+import 'package:todo_app/firebase_service.dart';
+import 'package:todo_app/models/Task_Model.dart';
 import 'package:todo_app/tabs/Tasks/default_Button.dart';
 import 'package:todo_app/tabs/Tasks/default_TextFormFiled.dart';
+import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
 class TaskBottomSheet extends StatefulWidget {
   const TaskBottomSheet({super.key});
@@ -101,12 +105,28 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
             DefaultButton(
               lable: 'submit',
               onpress: () {
-                if (formkey.currentState!.validate()) {}
+                if (formkey.currentState!.validate()) {
+                  addtask();
+                }
               },
             )
           ],
         ),
       ),
     );
+  }
+
+  void addtask() {
+    FireBaseService.addtask(TaskModel(
+            title: titlecontroller.text,
+            description: descriptionController.text,
+            date: selectedDate))
+        .timeout(Duration(microseconds: 300), onTimeout: () {
+      print('task added');
+      Navigator.of(context).pop();
+      Provider.of<TasksProvider>(context, listen: false).getalltasks();
+    }).catchError((error) {
+      print(error);
+    });
   }
 }
