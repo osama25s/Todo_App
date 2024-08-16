@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/home_scree.dart';
+import 'package:todo_app/tabs/Tasks/EditTask_Tab.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
 Future<void> main() async {
@@ -40,6 +41,7 @@ class TodoApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         routes: {
           HomeScreen.reoutename: (context) => HomeScreen(),
+          EditTask_Tab.routname: (context) => EditTask_Tab(),
         },
       ),
     );

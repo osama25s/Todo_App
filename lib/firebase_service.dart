@@ -28,4 +28,10 @@ class FireBaseService {
     QuerySnapshot<TaskModel> querySnapshot = await taskcollection.get();
     return querySnapshot.docs.map((docsanpshot) => docsanpshot.data()).toList();
   }
+
+  static Future<void> edittask(String id, Map<String, dynamic> data) async {
+    CollectionReference<TaskModel> taskcollections = _getCollection();
+    DocumentReference<TaskModel> docref = taskcollections.doc(id);
+    return await docref.update(data);
+  }
 }

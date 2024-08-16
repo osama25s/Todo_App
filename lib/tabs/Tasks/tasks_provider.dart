@@ -24,4 +24,8 @@ class TasksProvider extends ChangeNotifier {
     selectedDate = changeddate;
     notifyListeners();
   }
+
+  void updatetask(String id, Map<String, dynamic> data) async {
+    await FireBaseService.edittask(id, data);
+  }
 }

@@ -12,7 +12,7 @@ class DefaultButton extends StatelessWidget {
       child: Text(
         lable,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.w600, color: AppTheme.white, fontSize: 18),
+            fontWeight: FontWeight.w500, color: AppTheme.white, fontSize: 18),
       ),
       style: ElevatedButton.styleFrom(
           fixedSize: Size(MediaQuery.of(context).size.width, 52.h)),
