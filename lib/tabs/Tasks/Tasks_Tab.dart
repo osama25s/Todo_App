@@ -45,6 +45,8 @@ class TasksTab extends StatelessWidget {
                 },
                 activeColor: AppTheme.white,
                 dayProps: EasyDayProps(
+                  width: 60.w,
+                  height: 80.h,
                   activeDayStyle: DayStyle(
                     decoration: BoxDecoration(
                         color: AppTheme.white,
@@ -111,7 +113,6 @@ class TasksTab extends StatelessWidget {
                         .titleLarge!
                         .copyWith(color: AppTheme.black),
                   ),
-                  height: 80.h,
                 ),
               ),
             ),
