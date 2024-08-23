@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
+import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Tasks/default_Button.dart';
 import 'package:todo_app/tabs/Tasks/default_TextFormFiled.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
@@ -119,15 +120,25 @@ class _EditTask_TabState extends State<EditTask_Tab> {
                           decriptEditController.text.trim() !=
                               argument.description ||
                           selecteddate != argument.date) {
-                        tasksProvider.updatetask(argument.id, {
-                          'title': titleEditController.text,
-                          'description': decriptEditController.text,
-                          'date': Timestamp.fromDate(argument.date),
-                        });
+                        tasksProvider.updatetask(
+                          argument.id,
+                          {
+                            'title': titleEditController.text,
+                            'description': decriptEditController.text,
+                            'date': Timestamp.fromDate(argument.date),
+                          },
+                          Provider.of<UserProvider>(context, listen: false)
+                              .currentUser!
+                              .id,
+                        );
 
                         print(selecteddate.toString());
                         Navigator.of(context).pop();
-                        tasksProvider.getalltasks();
+                        tasksProvider.getalltasks(
+                          Provider.of<UserProvider>(context, listen: false)
+                              .currentUser!
+                              .id,
+                        );
                       }
                     }),
               )

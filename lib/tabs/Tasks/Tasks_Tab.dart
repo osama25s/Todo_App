@@ -5,14 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
+import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Tasks/Task_Item.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
 class TasksTab extends StatelessWidget {
   TasksTab({super.key});
+  bool gettask = true;
   @override
   Widget build(BuildContext context) {
     TasksProvider tasksProvider = Provider.of<TasksProvider>(context);
+    if (gettask) {
+      tasksProvider.getalltasks(
+          Provider.of<UserProvider>(context, listen: false).currentUser!.id);
+      gettask = false;
+    }
     return Column(
       children: [
         Stack(
@@ -41,12 +48,17 @@ class TasksTab extends StatelessWidget {
                 showTimelineHeader: false,
                 onDateChange: (focusDate) {
                   tasksProvider.changedate(focusDate);
-                  tasksProvider.getalltasks();
+                  tasksProvider.getalltasks(
+                    Provider.of<UserProvider>(context, listen: false)
+                        .currentUser!
+                        .id,
+                  );
                 },
                 activeColor: AppTheme.white,
                 dayProps: EasyDayProps(
+                  dayStructure: DayStructure.dayNumDayStr,
                   width: 60.w,
-                  height: 80.h,
+                  height: 85.h,
                   activeDayStyle: DayStyle(
                     decoration: BoxDecoration(
                         color: AppTheme.white,
@@ -59,9 +71,6 @@ class TasksTab extends StatelessWidget {
                         .textTheme
                         .titleLarge!
                         .copyWith(color: AppTheme.black),
-                    monthStrStyle: TextStyle(
-                      color: Colors.transparent,
-                    ),
                     dayStrStyle: Theme.of(context)
                         .textTheme
                         .titleSmall!
@@ -76,9 +85,6 @@ class TasksTab extends StatelessWidget {
                           width: 2,
                         )),
                     dayNumStyle: Theme.of(context).textTheme.titleLarge,
-                    monthStrStyle: TextStyle(
-                      color: Colors.transparent,
-                    ),
                     dayStrStyle: Theme.of(context)
                         .textTheme
                         .titleSmall!
@@ -91,22 +97,19 @@ class TasksTab extends StatelessWidget {
                       color: AppTheme.white,
                       borderRadius: BorderRadius.circular(5.r),
                     ),
-                    monthStrStyle: TextStyle(
-                      color: Colors.transparent,
-                    ),
                     dayNumStyle: Theme.of(context)
                         .textTheme
                         .titleLarge!
                         .copyWith(color: AppTheme.black),
-                    dayStrStyle: Theme.of(context).textTheme.titleSmall,
+                    dayStrStyle: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontWeight: FontWeight.w200, fontSize: 12),
                   ),
                   disabledDayStyle: DayStyle(
                     decoration: BoxDecoration(
                       color: AppTheme.white,
                       borderRadius: BorderRadius.circular(5.r),
-                    ),
-                    monthStrStyle: TextStyle(
-                      color: Colors.transparent,
                     ),
                     dayNumStyle: Theme.of(context)
                         .textTheme

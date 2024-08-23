@@ -19,6 +19,11 @@ class AppTheme {
           color: primary,
           fontWeight: FontWeight.bold,
         ),
+        titleMedium: GoogleFonts.poppins(
+          fontSize: 18,
+          color: black,
+          fontWeight: FontWeight.w500,
+        ),
         titleSmall: GoogleFonts.roboto(
           fontSize: 14,
           color: black,

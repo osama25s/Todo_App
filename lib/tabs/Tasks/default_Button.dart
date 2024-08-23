@@ -15,6 +15,7 @@ class DefaultButton extends StatelessWidget {
             fontWeight: FontWeight.w500, color: AppTheme.white, fontSize: 18),
       ),
       style: ElevatedButton.styleFrom(
+        backgroundColor: AppTheme.primary,
           fixedSize: Size(MediaQuery.of(context).size.width, 52.h)),
       onPressed: onpress,
     );

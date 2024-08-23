@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
+import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Tasks/EditTask_Tab.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
@@ -27,8 +28,10 @@ class _Task_ItemState extends State<Task_Item> {
         startActionPane: ActionPane(
           motion: const ScrollMotion(),
           dismissible: DismissiblePane(onDismissed: () {
-            FireBaseService.deletetask(widget.taskModel.id)
-                .timeout(Duration(microseconds: 300), onTimeout: () {
+            FireBaseService.deletetask(
+              widget.taskModel.id,
+              Provider.of<UserProvider>(context, listen: false).currentUser!.id,
+            ).then((_) {
               Fluttertoast.showToast(
                   msg: "Task Deleted",
                   toastLength: Toast.LENGTH_SHORT,
@@ -37,14 +40,22 @@ class _Task_ItemState extends State<Task_Item> {
                   backgroundColor: AppTheme.red,
                   textColor: Colors.white,
                   fontSize: 18.0);
-              Provider.of<TasksProvider>(context, listen: false).getalltasks();
+              Provider.of<TasksProvider>(context, listen: false).getalltasks(
+                Provider.of<UserProvider>(context, listen: false)
+                    .currentUser!
+                    .id,
+              );
             }).catchError((error) {});
           }),
           children: [
             SlidableAction(
-              onPressed: (context) {
-                FireBaseService.deletetask(widget.taskModel.id)
-                    .timeout(Duration(microseconds: 300), onTimeout: () {
+              onPressed: (_) {
+                FireBaseService.deletetask(
+                  widget.taskModel.id,
+                  Provider.of<UserProvider>(context, listen: false)
+                      .currentUser!
+                      .id,
+                ).then((_) {
                   Fluttertoast.showToast(
                       msg: "Task Deleted",
                       toastLength: Toast.LENGTH_SHORT,
@@ -54,7 +65,11 @@ class _Task_ItemState extends State<Task_Item> {
                       textColor: Colors.white,
                       fontSize: 18.0);
                   Provider.of<TasksProvider>(context, listen: false)
-                      .getalltasks();
+                      .getalltasks(
+                    Provider.of<UserProvider>(context, listen: false)
+                        .currentUser!
+                        .id,
+                  );
                 }).catchError((error) {});
               },
               backgroundColor: AppTheme.red,
@@ -147,7 +162,10 @@ class _Task_ItemState extends State<Task_Item> {
   void setdone() {
     widget.taskModel.isDone = !widget.taskModel.isDone;
     FireBaseService.edittask(
-        widget.taskModel.id, {'isDone': widget.taskModel.isDone});
+      widget.taskModel.id,
+      {'isDone': widget.taskModel.isDone},
+      Provider.of<UserProvider>(context, listen: false).currentUser!.id,
+    );
     setState(() {});
   }
 }

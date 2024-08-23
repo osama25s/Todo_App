@@ -1,28 +1,30 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/home_scree.dart';
+import 'package:todo_app/tabs/Authentication/Login_Tab.dart';
+import 'package:todo_app/tabs/Authentication/Register_Tab.dart';
+import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Tasks/EditTask_Tab.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseFirestore.instance.disableNetwork();
-  FirebaseFirestore.instance.settings =
-      Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
-  runApp(ChangeNotifierProvider(
-    create: (context) {
-      return TasksProvider();
-    },
-    child: TodoApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TasksProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+      ],
+      child: TodoApp(),
+    ),
+  );
 }
 
 class TodoApp extends StatelessWidget {
@@ -42,7 +44,10 @@ class TodoApp extends StatelessWidget {
         routes: {
           HomeScreen.reoutename: (context) => HomeScreen(),
           EditTask_Tab.routname: (context) => EditTask_Tab(),
+          Login_Tap.routename: (context) => Login_Tap(),
+          Register_Tab.routename: (context) => Register_Tab(),
         },
+        initialRoute: Login_Tap.routename,
       ),
     );
   }

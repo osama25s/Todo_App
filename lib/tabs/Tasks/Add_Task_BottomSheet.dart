@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
+import 'package:todo_app/models/User_Model.dart';
+import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Tasks/default_Button.dart';
 import 'package:todo_app/tabs/Tasks/default_TextFormFiled.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
@@ -118,14 +120,18 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   }
 
   void addtask() {
-    FireBaseService.addtask(TaskModel(
-            title: titlecontroller.text,
-            description: descriptionController.text,
-            date: selectedDate))
-        .timeout(Duration(microseconds: 300), onTimeout: () {
+    FireBaseService.addtask(
+      TaskModel(
+          title: titlecontroller.text,
+          description: descriptionController.text,
+          date: selectedDate),
+      Provider.of<UserProvider>(context, listen: false).currentUser!.id,
+    ).then((_) {
       print('task added');
       Navigator.of(context).pop();
-      Provider.of<TasksProvider>(context, listen: false).getalltasks();
+      Provider.of<TasksProvider>(context, listen: false).getalltasks(
+        Provider.of<UserProvider>(context, listen: false).currentUser!.id,
+      );
       Fluttertoast.showToast(
           msg: "Task added Successfully",
           toastLength: Toast.LENGTH_SHORT,

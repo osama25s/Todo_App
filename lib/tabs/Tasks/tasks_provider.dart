@@ -3,14 +3,11 @@ import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
 
 class TasksProvider extends ChangeNotifier {
-  TasksProvider() {
-    getalltasks();
-  }
   List<TaskModel> tasks = [];
   DateTime selectedDate = DateTime.now();
 
-  Future<void> getalltasks() async {
-    List<TaskModel> alltasks = await FireBaseService.gettasks();
+  Future<void> getalltasks(String userid) async {
+    List<TaskModel> alltasks = await FireBaseService.gettasks(userid);
     tasks = alltasks
         .where((task) =>
             task.date.day == selectedDate.day &&
@@ -25,7 +22,7 @@ class TasksProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updatetask(String id, Map<String, dynamic> data) async {
-    await FireBaseService.edittask(id, data);
+  void updatetask(String id, Map<String, dynamic> data, String userid) async {
+    await FireBaseService.edittask(id, data, userid);
   }
 }
