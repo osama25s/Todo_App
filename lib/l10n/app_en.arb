@@ -1,0 +1,18 @@
+{
+    "todolist" : "ToDo List",
+    "settings" : "Settings",
+    "mode" : "Mode",
+    "darkmode" : "dark mode",
+    "lightmode": "light mode",
+    "language" : "Language",
+    "english"  : "english",
+    "arabic"  : "arabic",
+    "addtask" : "Add new Task",
+    "entertasktitle" : "enter task title",
+    "entertaskdes" : "enter task description",
+    "selectdate" : "select date:",
+    "submit" : "submit",
+    "done" : "Done!",
+    "delete" : "Delete",
+    "logout" : "Logout"
+}

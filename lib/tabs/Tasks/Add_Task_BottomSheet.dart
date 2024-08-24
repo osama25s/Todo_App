@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
-import 'package:todo_app/models/User_Model.dart';
 import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Settings/Settings_Provider.dart';
 import 'package:todo_app/tabs/Tasks/default_Button.dart';
 import 'package:todo_app/tabs/Tasks/default_TextFormFiled.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskBottomSheet extends StatefulWidget {
   const TaskBottomSheet({super.key});
@@ -33,93 +33,96 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
       color: settingsPrvider.themeMode == ThemeMode.dark
           ? AppTheme.darkBG
           : AppTheme.white,
-      padding: EdgeInsets.all(16),
-      child: Form(
-        key: formkey,
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 14.h),
-              child: Text(
-                'Add new Task',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: settingsPrvider.themeMode == ThemeMode.dark
-                          ? AppTheme.white
-                          : AppTheme.black,
-                    ),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 35.h) +
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SingleChildScrollView(
+        child: Form(
+          key: formkey,
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 14.h),
+                child: Text(
+                  AppLocalizations.of(context)!.addtask,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: settingsPrvider.themeMode == ThemeMode.dark
+                            ? AppTheme.white
+                            : AppTheme.black,
+                      ),
+                ),
               ),
-            ),
-            DefaultTextFiled(
-              taskController: titlecontroller,
-              hint: 'enter task title',
-              validate: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'task title can not be empty';
-                }
-                return null;
-              },
-            ),
-            SizedBox(
-              height: 18.h,
-            ),
-            DefaultTextFiled(
-              taskController: descriptionController,
-              hint: 'enter task description',
-              maxlines: 3,
-              validate: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'task title can not be empty';
-                }
-                return null;
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 24.h, bottom: 35.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'select date :',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(fontSize: 16.sp),
-                  ),
-                  InkWell(
-                    child: Text(
-                      dateFormat.format(selectedDate),
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: AppTheme.primary,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+              DefaultTextFiled(
+                taskController: titlecontroller,
+                hint: AppLocalizations.of(context)!.entertasktitle,
+                validate: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'task title can not be empty';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 18.h,
+              ),
+              DefaultTextFiled(
+                taskController: descriptionController,
+                hint: AppLocalizations.of(context)!.entertaskdes,
+                maxlines: 3,
+                validate: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'task title can not be empty';
+                  }
+                  return null;
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 24.h, bottom: 35.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.selectdate,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(fontSize: 16.sp),
                     ),
-                    onTap: () async {
-                      DateTime? dateTime = await showDatePicker(
-                          context: context,
-                          firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(Duration(days: 365)),
-                          initialDate: selectedDate,
-                          initialEntryMode: DatePickerEntryMode.calendarOnly);
+                    InkWell(
+                      child: Text(
+                        dateFormat.format(selectedDate),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: AppTheme.primary,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      onTap: () async {
+                        DateTime? dateTime = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now().add(Duration(days: 365)),
+                            initialDate: selectedDate,
+                            initialEntryMode: DatePickerEntryMode.calendarOnly);
 
-                      if (dateTime != null) {
-                        selectedDate = dateTime;
-                        setState(() {});
-                      }
-                    },
-                  ),
-                ],
+                        if (dateTime != null) {
+                          selectedDate = dateTime;
+                          setState(() {});
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            DefaultButton(
-              lable: 'submit',
-              onpress: () {
-                if (formkey.currentState!.validate()) {
-                  addtask();
-                }
-              },
-            )
-          ],
+              DefaultButton(
+                lable: AppLocalizations.of(context)!.submit,
+                onpress: () {
+                  if (formkey.currentState!.validate()) {
+                    addtask();
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Settings/Settings_Provider.dart';
 import 'package:todo_app/tabs/Tasks/EditTask_Tab.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Task_Item extends StatefulWidget {
   TaskModel taskModel;
@@ -77,7 +78,7 @@ class _Task_ItemState extends State<Task_Item> {
               backgroundColor: AppTheme.red,
               foregroundColor: AppTheme.white,
               icon: Icons.delete,
-              label: 'Delete',
+              label: AppLocalizations.of(context)!.delete,
               borderRadius: BorderRadius.circular(15.r),
             ),
           ],
@@ -127,7 +128,7 @@ class _Task_ItemState extends State<Task_Item> {
                 widget.taskModel.isDone
                     ? TextButton(
                         child: Text(
-                          'Done!',
+                          AppLocalizations.of(context)!.done,
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!

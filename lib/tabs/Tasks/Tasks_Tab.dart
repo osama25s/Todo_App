@@ -8,6 +8,8 @@ import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/tabs/Authentication/User_Provider.dart';
 import 'package:todo_app/tabs/Tasks/Task_Item.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TasksTab extends StatelessWidget {
   TasksTab({super.key});
@@ -32,7 +34,7 @@ class TasksTab extends StatelessWidget {
             Padding(
               padding: EdgeInsetsDirectional.only(top: 75.h, start: 20.w),
               child: Text(
-                'To Do List',
+                AppLocalizations.of(context)!.todolist,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!

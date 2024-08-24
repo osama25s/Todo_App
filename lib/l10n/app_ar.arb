@@ -1,0 +1,18 @@
+{
+    "todolist" : "قائمةالمهام",
+    "settings" : "الإعدادات",
+    "mode" : "الوضع",
+    "darkmode" : "الوضع الداكن",
+    "lightmode": "الوضع الفاتح",
+    "language" : "اللغة",
+    "english"  : "الانجليزية",
+    "arabic"  : "العربية",
+    "addtask" : "اضافة مهمة جديدة",
+    "entertasktitle" : "ادخل عنوان المهمة",
+    "entertaskdes" : "ادخل وصف المهمة",
+    "selectdate" : ":اختر التاريخ",
+    "submit" : "اضافة",
+    "done" : "!تم",
+    "delete" : "حذف",
+    "logout" : "تسجيل خروج"
+}
