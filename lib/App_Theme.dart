@@ -55,5 +55,48 @@ class AppTheme {
           style: ElevatedButton.styleFrom(
         backgroundColor: primary,
       )));
-  static ThemeData darkTheme = ThemeData();
+
+  static ThemeData darkTheme = ThemeData(
+      textTheme: TextTheme(
+        titleLarge: GoogleFonts.poppins(
+          fontSize: 18,
+          color: primary,
+          fontWeight: FontWeight.bold,
+        ),
+        titleMedium: GoogleFonts.poppins(
+          fontSize: 18,
+          color: white,
+          fontWeight: FontWeight.w500,
+        ),
+        titleSmall: GoogleFonts.roboto(
+          fontSize: 14,
+          color: white,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      primaryColor: primary,
+      scaffoldBackgroundColor: darkBG,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: primary,
+        unselectedItemColor: grey,
+        backgroundColor: darkitems,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        elevation: 0,
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: primary,
+        foregroundColor: white,
+        shape: CircleBorder(
+          side: BorderSide(
+            width: 4,
+            color: darkitems,
+          ),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+        backgroundColor: primary,
+      )));
 }

@@ -8,6 +8,7 @@ import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
 import 'package:todo_app/models/User_Model.dart';
 import 'package:todo_app/tabs/Authentication/User_Provider.dart';
+import 'package:todo_app/tabs/Settings/Settings_Provider.dart';
 import 'package:todo_app/tabs/Tasks/default_Button.dart';
 import 'package:todo_app/tabs/Tasks/default_TextFormFiled.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
@@ -27,7 +28,11 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    SettingsPrvider settingsPrvider = Provider.of<SettingsPrvider>(context);
     return Container(
+      color: settingsPrvider.themeMode == ThemeMode.dark
+          ? AppTheme.darkBG
+          : AppTheme.white,
       padding: EdgeInsets.all(16),
       child: Form(
         key: formkey,
@@ -37,10 +42,11 @@ class _TaskBottomSheetState extends State<TaskBottomSheet> {
               padding: EdgeInsets.symmetric(vertical: 14.h),
               child: Text(
                 'Add new Task',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(color: AppTheme.black),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: settingsPrvider.themeMode == ThemeMode.dark
+                          ? AppTheme.white
+                          : AppTheme.black,
+                    ),
               ),
             ),
             DefaultTextFiled(

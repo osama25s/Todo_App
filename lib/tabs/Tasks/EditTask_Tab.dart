@@ -7,6 +7,7 @@ import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
 import 'package:todo_app/tabs/Authentication/User_Provider.dart';
+import 'package:todo_app/tabs/Settings/Settings_Provider.dart';
 import 'package:todo_app/tabs/Tasks/default_Button.dart';
 import 'package:todo_app/tabs/Tasks/default_TextFormFiled.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
@@ -30,6 +31,7 @@ class _EditTask_TabState extends State<EditTask_Tab> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsPrvider settingsPrvider = Provider.of<SettingsPrvider>(context);
     TasksProvider tasksProvider = Provider.of<TasksProvider>(context);
     TaskModel argument =
         ModalRoute.of(context)!.settings.arguments as TaskModel;
@@ -41,23 +43,42 @@ class _EditTask_TabState extends State<EditTask_Tab> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Center(
-        child: Container(
-          width: 352.w,
-          height: 617.h,
+      body: Stack(children: [
+        Container(
+          width: double.infinity,
+          height: 220.h,
+          color: Theme.of(context).primaryColor,
+        ),
+        Padding(
+          padding: EdgeInsetsDirectional.only(top: 75.h, start: 20.w),
+          child: Text(
+            'Settings',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(color: AppTheme.white, fontSize: 25.sp),
+          ),
+        ),
+        Container(
+          width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          margin: EdgeInsets.only(
+              left: 30.w, right: 30.w, top: 150.h, bottom: 100.h),
           decoration: BoxDecoration(
-            color: AppTheme.white,
+            color: settingsPrvider.themeMode == ThemeMode.dark
+                ? AppTheme.darkitems
+                : AppTheme.white,
             borderRadius: BorderRadius.circular(15.r),
           ),
           child: Column(
             children: [
               Text(
                 'Edit Task',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: AppTheme.black),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: settingsPrvider.themeMode == ThemeMode.dark
+                          ? AppTheme.white
+                          : AppTheme.black,
+                    ),
               ),
               SizedBox(
                 height: 55.h,
@@ -145,7 +166,7 @@ class _EditTask_TabState extends State<EditTask_Tab> {
             ],
           ),
         ),
-      ),
+      ]),
     );
   }
 }

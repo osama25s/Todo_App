@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/App_Theme.dart';
+import 'package:todo_app/tabs/Settings/Settings_Provider.dart';
 
 class DefaultTextFiled extends StatefulWidget {
   DefaultTextFiled(
@@ -23,8 +25,10 @@ class _DefaultTextFiledState extends State<DefaultTextFiled> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsPrvider settingsPrvider = Provider.of<SettingsPrvider>(context);
     return TextFormField(
       controller: widget.taskController,
+      style: TextStyle(color: settingsPrvider.themeMode == ThemeMode.dark ? AppTheme.white : AppTheme.black,),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: widget.ispassword ? showpass : false,
       maxLines: widget.maxlines,
@@ -46,11 +50,15 @@ class _DefaultTextFiledState extends State<DefaultTextFiled> {
             : null,
         hintStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontSize: 18,
-              color: AppTheme.black.withOpacity(0.6),
+              color: settingsPrvider.themeMode == ThemeMode.dark
+                  ? AppTheme.white.withOpacity(0.6)
+                  : AppTheme.black.withOpacity(0.6),
             ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: AppTheme.black,
+            color: settingsPrvider.themeMode == ThemeMode.dark
+                ? AppTheme.primary
+                : AppTheme.black,
           ),
         ),
         focusedBorder: UnderlineInputBorder(

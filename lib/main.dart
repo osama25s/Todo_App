@@ -10,6 +10,7 @@ import 'package:todo_app/home_scree.dart';
 import 'package:todo_app/tabs/Authentication/Login_Tab.dart';
 import 'package:todo_app/tabs/Authentication/Register_Tab.dart';
 import 'package:todo_app/tabs/Authentication/User_Provider.dart';
+import 'package:todo_app/tabs/Settings/Settings_Provider.dart';
 import 'package:todo_app/tabs/Tasks/EditTask_Tab.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
@@ -21,6 +22,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => TasksProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsPrvider()),
       ],
       child: TodoApp(),
     ),
@@ -32,6 +34,7 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingsPrvider settingsPrvider = Provider.of<SettingsPrvider>(context);
     return ScreenUtilInit(
       designSize: const Size(412, 870),
       minTextAdapt: true,
@@ -40,7 +43,7 @@ class TodoApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.light,
+        themeMode: settingsPrvider.themeMode,
         routes: {
           HomeScreen.reoutename: (context) => HomeScreen(),
           EditTask_Tab.routname: (context) => EditTask_Tab(),

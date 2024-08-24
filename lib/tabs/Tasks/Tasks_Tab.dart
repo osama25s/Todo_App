@@ -74,7 +74,8 @@ class TasksTab extends StatelessWidget {
                     dayStrStyle: Theme.of(context)
                         .textTheme
                         .titleSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
+                        .copyWith(
+                            fontWeight: FontWeight.w600, color: AppTheme.black),
                   ),
                   todayStyle: DayStyle(
                     decoration: BoxDecoration(
@@ -104,7 +105,10 @@ class TasksTab extends StatelessWidget {
                     dayStrStyle: Theme.of(context)
                         .textTheme
                         .titleSmall!
-                        .copyWith(fontWeight: FontWeight.w200, fontSize: 12),
+                        .copyWith(
+                            fontWeight: FontWeight.w200,
+                            fontSize: 12,
+                            color: AppTheme.black),
                   ),
                   disabledDayStyle: DayStyle(
                     decoration: BoxDecoration(

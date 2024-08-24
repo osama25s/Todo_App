@@ -7,6 +7,7 @@ import 'package:todo_app/App_Theme.dart';
 import 'package:todo_app/firebase_service.dart';
 import 'package:todo_app/models/Task_Model.dart';
 import 'package:todo_app/tabs/Authentication/User_Provider.dart';
+import 'package:todo_app/tabs/Settings/Settings_Provider.dart';
 import 'package:todo_app/tabs/Tasks/EditTask_Tab.dart';
 import 'package:todo_app/tabs/Tasks/tasks_provider.dart';
 
@@ -21,6 +22,7 @@ class Task_Item extends StatefulWidget {
 class _Task_ItemState extends State<Task_Item> {
   @override
   Widget build(BuildContext context) {
+    SettingsPrvider settingsPrvider = Provider.of<SettingsPrvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: Slidable(
@@ -88,8 +90,11 @@ class _Task_ItemState extends State<Task_Item> {
           child: Container(
             padding: EdgeInsets.all(18),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.r),
-                color: AppTheme.white),
+              borderRadius: BorderRadius.circular(15.r),
+              color: settingsPrvider.themeMode == ThemeMode.dark
+                  ? AppTheme.darkitems
+                  : AppTheme.white,
+            ),
             child: Row(
               children: [
                 Container(
